@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jasmine Nyree Homes, Inc. — Building Stronger Communities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lato:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   JASMINE NYREE HOMES, INC.
+   Design tokens — change colors in one place here
+   ============================================================ */
+:root{
+  --gold:        #C69440;   /* primary brand gold (buttons, accents) */
+  --gold-deep:   #A87A2C;   /* hover / darker gold */
+  --gold-soft:   #E3C88F;   /* dividers, quote marks */
+  --gold-tint:   #FBEEDA;   /* icon circles */
+  --cream:       #FBF4E8;   /* banded section backgrounds */
+  --cream-2:     #FDF9F2;
+  --ink:         #232323;   /* headings */
+  --body:        #5F5F5F;   /* paragraph text */
+  --muted:       #8A8A8A;   /* dates, small meta */
+  --line:        #ECE3D2;   /* hairline borders */
+  --white:       #FFFFFF;
+  --bar:         #2B2B2B;   /* bottom copyright bar */
+
+  --display: "Playfair Display", Georgia, serif;
+  --sans: "Lato", "Helvetica Neue", Arial, sans-serif;
+
+  --wrap: 1180px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.7;
+  color:var(--body);
+  background:var(--white);
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--display);color:var(--ink);font-weight:400;margin:0;line-height:1.18}
+p{margin:0}
+:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+
+/* ---------- shared bits ---------- */
+.eyebrow{
+  font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+}
+.rule{width:64px;height:2px;background:var(--gold-soft);margin:22px 0}
+.rule-center{margin:14px auto 0}
+
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  padding:14px 26px;border-radius:3px;border:1px solid transparent;
+  transition:background .25s ease,color .25s ease,border-color .25s ease,transform .25s ease;
+}
+.btn svg{width:13px;height:13px;flex:none}
+.btn-solid{background:var(--gold);color:#fff}
+.btn-solid:hover{background:var(--gold-deep)}
+.btn-outline{background:transparent;color:var(--gold-deep);border-color:var(--gold)}
+.btn-outline:hover{background:var(--gold);color:#fff}
+.btn:hover{transform:translateY(-1px)}
+
+.link-more{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+}
+.link-more svg{width:12px;height:12px;transition:transform .25s ease}
+.link-more:hover svg{transform:translateX(4px)}
+
+/* image placeholder wrapper — keeps layout intact if a photo fails to load */
+.ph{background:linear-gradient(135deg,#F3E7D2 0%,#E7D3B0 55%,#D9BE8C 100%);overflow:hidden;position:relative}
+.ph img{width:100%;height:100%;object-fit:cover}
+
+/* ============================ HEADER ============================ */
+.site-header{
+  position:sticky;top:0;z-index:50;background:var(--white);
+  border-bottom:1px solid rgba(0,0,0,.04);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 28px;max-width:1360px;margin:0 auto}
+
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:52px;height:52px;flex:none}
+.logo-type{display:flex;flex-direction:column;line-height:1}
+.logo-name{font-family:var(--display);font-size:19px;letter-spacing:.06em;color:#3A3226}
+.logo-sub{
+  font-family:var(--display);font-size:8.5px;letter-spacing:.42em;color:#6B6055;margin-top:5px;
+  border-top:1px solid var(--gold-soft);border-bottom:1px solid var(--gold-soft);padding:3px 0;
+}
+.logo-tag{font-size:6.5px;font-style:italic;color:#8C8175;margin-top:4px;letter-spacing:.02em;line-height:1.45}
+
+.nav{display:flex;align-items:center;gap:30px}
+.nav a{
+  font-size:13.5px;color:#4A4A4A;position:relative;padding-bottom:6px;transition:color .2s ease;
+}
+.nav a:hover{color:var(--gold-deep)}
+.nav a.is-active{color:var(--gold)}
+.nav a.is-active::after{
+  content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:20px;height:2px;background:var(--gold);
+}
+.donate{
+  background:var(--gold);color:#fff;padding:13px 24px;border-radius:3px;
+  font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:9px;transition:background .25s ease;
+}
+.donate:hover{background:var(--gold-deep)}
+.donate svg{width:14px;height:14px}
+
+.nav-toggle{display:none;background:none;border:0;padding:8px;cursor:pointer;color:var(--ink)}
+
+/* ============================ HERO ============================ */
+.hero{display:grid;grid-template-columns:minmax(0,46%) minmax(0,54%);align-items:center;background:var(--white)}
+.hero-copy{padding:76px 28px 76px max(28px, calc((100vw - var(--wrap))/2 + 28px))}
+.hero h1{font-size:clamp(38px,4.4vw,60px);margin-top:14px;letter-spacing:-.01em}
+.hero p{max-width:390px;margin-bottom:34px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:16px}
+.hero-media{height:clamp(340px,42vw,470px);border-radius:14px 0 0 14px}
+
+/* ======================= PILLARS STRIP ======================= */
+.pillars{background:var(--cream);padding:52px 0}
+.pillars-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.pillar{text-align:center;padding:8px 26px;border-left:1px solid #EFE2CC}
+.pillar:first-child{border-left:0}
+.pillar-icon{color:var(--gold);height:44px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.pillar-icon svg{width:42px;height:42px}
+.pillar h3{font-family:var(--sans);font-size:14.5px;font-weight:700;color:#3A3A3A;letter-spacing:.01em;margin-bottom:8px}
+.pillar p{font-size:13.5px;line-height:1.6;max-width:230px;margin:0 auto}
+
+/* ========================== MISSION ========================== */
+.mission{position:relative;overflow:hidden;padding:88px 0 62px}
+.mission-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:center;position:relative;z-index:2}
+.mission-photo{
+  width:min(100%,300px);aspect-ratio:1;border-radius:50%;margin:0 auto;
+  border:3px solid var(--gold);padding:5px;background:var(--white);
+}
+.mission-photo .ph{width:100%;height:100%;border-radius:50%}
+.mission h2{font-size:clamp(28px,3vw,38px);margin-top:12px}
+.mission p{max-width:430px;font-size:14.5px}
+.mission .rule{margin:20px 0 20px}
+.mission .btn{margin-top:26px}
+.deco{position:absolute;right:-40px;top:40px;width:340px;color:var(--gold);opacity:.16;z-index:1;pointer-events:none}
+
+/* ========================== PROGRAMS ========================== */
+.programs{padding:8px 0 76px;text-align:center}
+.section-title{font-size:clamp(26px,2.6vw,34px)}
+.programs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;text-align:left}
+.card{
+  background:var(--white);border:1px solid var(--line);border-radius:4px;padding:26px 24px;
+  display:flex;gap:18px;transition:box-shadow .3s ease,transform .3s ease;
+}
+.card:hover{box-shadow:0 14px 34px rgba(140,110,50,.11);transform:translateY(-3px)}
+.card-icon{
+  width:56px;height:56px;flex:none;border-radius:50%;background:var(--gold-tint);
+  display:flex;align-items:center;justify-content:center;color:var(--gold);
+}
+.card-icon svg{width:26px;height:26px}
+.card h3{font-family:var(--sans);font-size:15px;font-weight:700;color:#3A3A3A;margin-bottom:9px}
+.card p{font-size:13.5px;line-height:1.6;margin-bottom:14px}
+
+/* =========================== STATS =========================== */
+.stats{background:var(--cream);padding:34px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{text-align:center;padding:6px 16px;border-left:1px solid #EFE2CC}
+.stat:first-child{border-left:0}
+.stat-num{font-family:var(--display);font-size:clamp(30px,3.4vw,40px);color:var(--gold);line-height:1.1}
+.stat-label{font-size:12.5px;font-weight:600;color:#4E4E4E;letter-spacing:.02em;margin-top:6px}
+
+/* ======================== TESTIMONIAL ======================== */
+.testimonial{padding:74px 0 60px;position:relative;text-align:center}
+.testimonial-inner{max-width:720px;margin:0 auto;position:relative;padding:0 46px}
+.qmark{position:absolute;font-family:var(--display);font-size:62px;color:var(--gold-soft);line-height:1}
+.qmark.open{left:0;top:-12px}
+.qmark.close{right:0;bottom:-34px}
+.quote{font-family:var(--display);font-style:italic;font-size:clamp(18px,2vw,23px);line-height:1.55;color:#333}
+.quote-by{font-size:13px;color:var(--muted);margin-top:22px}
+.dots{display:flex;gap:8px;justify-content:center;margin-top:20px}
+.dots span{width:7px;height:7px;border-radius:50%;background:#DED6C6}
+.dots span.on{background:var(--gold)}
+
+/* ========================== NEWS ========================== */
+.news{padding:10px 0 84px;text-align:center}
+.news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:44px;text-align:left}
+.news-card{
+  display:grid;grid-template-columns:38% 1fr;background:var(--white);
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;
+  transition:box-shadow .3s ease,transform .3s ease;
+}
+.news-card:hover{box-shadow:0 14px 34px rgba(140,110,50,.11);transform:translateY(-3px)}
+.news-card .ph{min-height:150px}
+.news-body{padding:22px 24px}
+.news-body h3{font-family:var(--display);font-size:17px;margin-bottom:8px}
+.news-date{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);margin-bottom:12px}
+.news-date svg{width:13px;height:13px;color:var(--gold)}
+.news-body p{font-size:13.5px;line-height:1.6;margin-bottom:14px}
+
+/* ========================== FOOTER ========================== */
+.site-footer{background:var(--cream);padding:52px 0 44px}
+.footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1.2fr 1fr;gap:40px}
+.footer h4{font-family:var(--sans);font-size:14px;font-weight:700;color:#3A3A3A;margin:0 0 16px}
+.footer-list{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:13.5px}
+.footer-list a:hover{color:var(--gold-deep)}
+.contact-list{list-style:none;margin:0;padding:0;display:grid;gap:11px;font-size:13.5px}
+.contact-list li{display:flex;gap:11px;align-items:flex-start}
+.contact-list svg{width:14px;height:14px;color:var(--gold);flex:none;margin-top:4px}
+.socials{display:flex;gap:11px;margin-bottom:20px}
+.socials a{
+  width:34px;height:34px;border-radius:50%;background:var(--gold);color:#fff;
+  display:flex;align-items:center;justify-content:center;transition:background .25s ease;
+}
+.socials a:hover{background:var(--gold-deep)}
+.socials svg{width:16px;height:16px}
+.copyright{background:var(--bar);color:#CFCFCF;text-align:center;font-size:12px;padding:13px 20px}
+
+/* ========================= RESPONSIVE ========================= */
+@media (max-width:1000px){
+  .nav{display:none}
+  .nav.open{
+    display:flex;flex-direction:column;align-items:flex-start;gap:14px;
+    position:absolute;top:100%;left:0;right:0;background:#fff;padding:20px 28px;
+    border-bottom:1px solid var(--line);box-shadow:0 16px 30px rgba(0,0,0,.06);
+  }
+  .nav-toggle{display:block}
+  .site-header{position:relative}
+  .header-inner{position:relative}
+  .hero{grid-template-columns:1fr}
+  .hero-copy{padding:56px 28px 44px;max-width:var(--wrap);margin:0 auto;width:100%}
+  .hero-media{border-radius:0;height:340px}
+  .mission-grid{grid-template-columns:1fr;gap:36px}
+  .mission p,.hero p{max-width:none}
+  .deco{display:none}
+  .programs-grid,.news-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:720px){
+  .pillars-grid,.stats-grid{grid-template-columns:1fr 1fr;gap:30px 0}
+  .pillar:nth-child(odd),.stat:nth-child(odd){border-left:0}
+  .news-card{grid-template-columns:1fr}
+  .news-card .ph{min-height:190px}
+  .footer-grid{grid-template-columns:1fr}
+  .donate span{display:none}
+  .donate{padding:12px 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================ HEADER ============================ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <!-- LOGO MARK: sunburst over cupped hands -->
+      <svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="48" fill="#fff" stroke="#2E2E2E" stroke-width="3"/>
+        <g fill="#C69440">
+          <circle cx="50" cy="40" r="9"/>
+          <g stroke="#C69440" stroke-width="3" stroke-linecap="round">
+            <line x1="50" y1="17" x2="50" y2="26"/>
+            <line x1="31" y1="24" x2="36" y2="31"/>
+            <line x1="69" y1="24" x2="64" y2="31"/>
+            <line x1="24" y1="40" x2="33" y2="40"/>
+            <line x1="76" y1="40" x2="67" y2="40"/>
+            <line x1="28" y1="54" x2="35" y2="49"/>
+            <line x1="72" y1="54" x2="65" y2="49"/>
+          </g>
+        </g>
+        <path d="M50 84C34 84 22 74 20 60c8-4 16-2 21 4 3-6 6-9 9-9s6 3 9 9c5-6 13-8 21-4-2 14-14 24-30 24z" fill="#2E2E2E"/>
+      </svg>
+      <span class="logo-type">
+        <span class="logo-name">JASMINE NYREE</span>
+        <span class="logo-sub">HOMES, INC.</span>
+        <span class="logo-tag">A Community Development Organization<br>and a Registered Community Organization</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#" class="is-active">Home</a>
+      <a href="#mission">About Us</a>
+      <a href="#programs">Our Programs</a>
+      <a href="#involved">Get Involved</a>
+      <a href="#news">News &amp; Events</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:10px">
+      <a class="donate" href="#donate"><span>Donate</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8z"/></svg>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================= HERO ============================= -->
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">Together, We Thrive</span>
+    <h1>Building Stronger<br>Communities</h1>
+    <div class="rule"></div>
+    <p>Empowering individuals and families through opportunity, connection, and sustainable community development.</p>
+    <div class="hero-actions">
+      <a class="btn btn-solid" href="#programs">Our Programs
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-outline" href="#involved">Get Involved
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+  <!-- IMAGE 1 — hero family photo (recommended 1400x1000) -->
+  <div class="ph hero-media">
+    <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=80"
+         alt="A family smiling together outdoors" onerror="this.remove()">
+  </div>
+</section>
+
+<!-- ========================= PILLARS STRIP ========================= -->
+<section class="pillars">
+  <div class="wrap pillars-grid">
+    <div class="pillar">
+      <div class="pillar-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 21 24 9l16 12v18H8z"/><path d="M24 33s-6-3.6-6-7.2a3.4 3.4 0 0 1 6-1.9 3.4 3.4 0 0 1 6 1.9C30 29.4 24 33 24 33z"/>
+        </svg>
+      </div>
+      <h3>Affordable Housing</h3>
+      <p>Creating and preserving safe, affordable homes.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="24" cy="17" r="5"/><path d="M15 34c0-5 4-8 9-8s9 3 9 8"/>
+          <circle cx="10" cy="21" r="4"/><path d="M3 34c0-4 3-6 7-6"/>
+          <circle cx="38" cy="21" r="4"/><path d="M45 34c0-4-3-6-7-6"/>
+        </svg>
+      </div>
+      <h3>Community Development</h3>
+      <p>Strengthening neighborhoods and building opportunities.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 15v22"/><path d="M24 15c-4-3-9-4-15-4v22c6 0 11 1 15 4"/><path d="M24 15c4-3 9-4 15-4v22c-6 0-11 1-15 4"/>
+        </svg>
+      </div>
+      <h3>Education &amp; Youth</h3>
+      <p>Empowering youth through mentorship and education.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 24s-6-3.8-6-7.6A3.6 3.6 0 0 1 24 14a3.6 3.6 0 0 1 6 2.4C30 20.2 24 24 24 24z"/>
+          <path d="M12 22v10c0 4 4 7 8 7h8c4 0 8-3 8-7V22"/><path d="M6 26c0-3 2-5 6-4M42 26c0-3-2-5-6-4"/>
+        </svg>
+      </div>
+      <h3>Family Support</h3>
+      <p>Providing resources for stronger, healthier families.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MISSION ============================ -->
+<section class="mission" id="mission">
+  <!-- decorative sunburst + figure watermark -->
+  <svg class="deco" viewBox="0 0 300 260" fill="none" aria-hidden="true">
+    <g stroke="currentColor" stroke-width="3" stroke-linecap="round">
+      <circle cx="196" cy="66" r="20" fill="currentColor" stroke="none"/>
+      <line x1="196" y1="18" x2="196" y2="34"/><line x1="196" y1="98" x2="196" y2="114"/>
+      <line x1="148" y1="66" x2="164" y2="66"/><line x1="228" y1="66" x2="244" y2="66"/>
+      <line x1="162" y1="32" x2="173" y2="43"/><line x1="219" y1="89" x2="230" y2="100"/>
+      <line x1="230" y1="32" x2="219" y2="43"/><line x1="173" y1="89" x2="162" y2="100"/>
+      <line x1="172" y1="22" x2="180" y2="38"/><line x1="212" y1="94" x2="220" y2="110"/>
+    </g>
+    <path d="M120 118a13 13 0 1 0 0-26 13 13 0 0 0 0 26zM120 122c-9 0-16 6-16 14v10l-24 16 6 10 26-18h16l26 18 6-10-24-16v-10c0-8-7-14-16-14zM108 158l-8 62h12l8-42 8 42h12l-8-62z" fill="currentColor"/>
+  </svg>
+
+  <div class="wrap mission-grid">
+    <!-- IMAGE 2 — circular "hands together" photo (recommended 800x800) -->
+    <div class="mission-photo">
+      <div class="ph">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80"
+             alt="Many hands joined together in a circle" onerror="this.remove()">
+      </div>
+    </div>
+    <div>
+      <span class="eyebrow">Our Mission</span>
+      <h2>Building Foundations.<br>Transforming Lives.</h2>
+      <div class="rule"></div>
+      <p>Jasmine Nyree Homes, Inc. is dedicated to strengthening communities by providing resources, support, and opportunities that empower individuals and families to thrive.</p>
+      <a class="btn btn-solid" href="#mission">Learn More About Us
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== PROGRAMS =========================== -->
+<section class="programs" id="programs">
+  <div class="wrap">
+    <h2 class="section-title">Our Programs</h2>
+    <div class="rule rule-center"></div>
+
+    <div class="programs-grid">
+      <article class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 10.5 12 3l9 7.5V21H3z"/><path d="M9.5 21v-6h5v6"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Housing Initiatives</h3>
+          <p>Developing and maintaining affordable housing for individuals and families.</p>
+          <a class="link-more" href="#programs">Learn More
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="2.6"/><path d="M7.5 17c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/>
+            <circle cx="4.5" cy="10.5" r="2"/><path d="M1 17c0-2 1.5-3 3.5-3"/>
+            <circle cx="19.5" cy="10.5" r="2"/><path d="M23 17c0-2-1.5-3-3.5-3"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Youth Empowerment</h3>
+          <p>Programs that inspire growth, leadership, and academic success.</p>
+          <a class="link-more" href="#programs">Learn More
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21V9"/><path d="M12 12C12 8 9 5 5 5c0 4 3 7 7 7z"/><path d="M12 14c0-3.5 2.7-6 6.5-6 0 3.5-2.7 6-6.5 6z"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Community Enrichment</h3>
+          <p>Projects and partnerships that build stronger, more vibrant neighborhoods.</p>
+          <a class="link-more" href="#programs">Learn More
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= STATS ============================= -->
+<section class="stats" id="involved">
+  <div class="wrap stats-grid">
+    <div class="stat"><div class="stat-num">1,200+</div><div class="stat-label">Families Supported</div></div>
+    <div class="stat"><div class="stat-num">850+</div><div class="stat-label">Homes Created or Preserved</div></div>
+    <div class="stat"><div class="stat-num">35+</div><div class="stat-label">Community Partnerships</div></div>
+    <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Years of Impact</div></div>
+  </div>
+</section>
+
+<!-- ========================== TESTIMONIAL ========================== -->
+<section class="testimonial">
+  <div class="testimonial-inner">
+    <span class="qmark open">&ldquo;</span>
+    <p class="quote">Jasmine Nyree Homes, Inc. gave our family more than a house&mdash;they gave us hope, stability, and a path forward.</p>
+    <span class="qmark close">&rdquo;</span>
+    <p class="quote-by">&ndash; A Community Member</p>
+    <div class="dots"><span class="on"></span><span></span><span></span></div>
+  </div>
+</section>
+
+<!-- ============================= NEWS ============================= -->
+<section class="news" id="news">
+  <div class="wrap">
+    <h2 class="section-title">News &amp; Events</h2>
+    <div class="rule rule-center"></div>
+
+    <div class="news-grid">
+      <article class="news-card">
+        <!-- IMAGE 3 — community event photo (recommended 600x600) -->
+        <div class="ph">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=700&q=80"
+               alt="People gathered at an outdoor community fair" onerror="this.remove()">
+        </div>
+        <div class="news-body">
+          <h3>Community Resource Fair</h3>
+          <div class="news-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+            June 15, 2025
+          </div>
+          <p>Join us for a day of resources, food, fun, and community connection.</p>
+          <a class="link-more" href="#news">Read More
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <!-- IMAGE 4 — housing / model home photo (recommended 600x600) -->
+        <div class="ph">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=700&q=80"
+               alt="Hands holding a small model house" onerror="this.remove()">
+        </div>
+        <div class="news-body">
+          <h3>New Housing Development</h3>
+          <div class="news-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+            May 20, 2025
+          </div>
+          <p>Breaking ground on new affordable homes for local families.</p>
+          <a class="link-more" href="#news">Read More
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer" id="contact">
+  <div class="wrap footer-grid footer">
+    <div>
+      <a class="logo" href="#">
+        <svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="48" fill="#fff" stroke="#2E2E2E" stroke-width="3"/>
+          <g fill="#C69440">
+            <circle cx="50" cy="40" r="9"/>
+            <g stroke="#C69440" stroke-width="3" stroke-linecap="round">
+              <line x1="50" y1="17" x2="50" y2="26"/><line x1="31" y1="24" x2="36" y2="31"/>
+              <line x1="69" y1="24" x2="64" y2="31"/><line x1="24" y1="40" x2="33" y2="40"/>
+              <line x1="76" y1="40" x2="67" y2="40"/><line x1="28" y1="54" x2="35" y2="49"/>
+              <line x1="72" y1="54" x2="65" y2="49"/>
+            </g>
+          </g>
+          <path d="M50 84C34 84 22 74 20 60c8-4 16-2 21 4 3-6 6-9 9-9s6 3 9 9c5-6 13-8 21-4-2 14-14 24-30 24z" fill="#2E2E2E"/>
+        </svg>
+        <span class="logo-type">
+          <span class="logo-name">JASMINE NYREE</span>
+          <span class="logo-sub">HOMES, INC.</span>
+          <span class="logo-tag">A Community Development Organization<br>and a Registered Community Organization</span>
+        </span>
+      </a>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <ul class="footer-list">
+        <li><a href="#mission">About Us</a></li>
+        <li><a href="#programs">Our Programs</a></li>
+        <li><a href="#involved">Get Involved</a></li>
+        <li><a href="#news">News &amp; Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Contact Us</h4>
+      <ul class="contact-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+          <span>(555) 123-4567</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          <span>info@jasminenyreehomes.org</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>123 Community Way<br>Atlanta, GA 30303</span>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Stay Connected</h4>
+      <div class="socials">
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6A21 21 0 0 0 14.3 3.5c-2.4 0-4 1.45-4 4.1v2.3H7.6V13h2.7v8z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.9 8.5H4V20h2.9zM5.45 3.9a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4zM20 13.6c0-3-1.6-4.4-3.75-4.4A3.2 3.2 0 0 0 13.4 11V8.5h-2.9V20h2.9v-6c0-1.4.6-2.2 1.8-2.2s1.9.75 1.9 2.2v6H20z"/></svg></a>
+      </div>
+      <a class="donate" href="#donate"><span>Donate</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+<div class="copyright">© 2025 Jasmine Nyree Homes, Inc. All Rights Reserved.</div>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('nav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+</script>
+</body>
+</html>
