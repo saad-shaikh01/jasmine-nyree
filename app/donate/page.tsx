@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import PageHero from "@/components/PageHero";
 
 const donationAmounts = [25, 50, 100, 250, 500];
 
@@ -46,31 +47,13 @@ export default function DonatePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative bg-[#2B2B2B] overflow-hidden min-h-[380px] md:min-h-[440px] flex items-center">
-        {/* BACKGROUND IMAGE */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/donate-hero.jpg"
-            alt="Community members working together in a garden"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#2B2B2B] via-[#2B2B2B]/80 to-[#2B2B2B]/60" />
-        </div>
-
-        <div className="max-w-[1920px] mx-auto px-5 md:px-10 w-full relative z-10 py-12 md:py-16 text-center">
-          <span className="eyebrow text-[#E3C88F]">Make a Difference</span>
-          <h1 className="font-serif text-[36px] sm:text-[44px] lg:text-[54px] text-white leading-[1.12] tracking-[-0.01em] mt-[10px]">
-            Your Generosity<br />Changes Lives
-          </h1>
-          <div className="rule rule-center mx-auto !bg-[#E3C88F]" />
-          <p className="max-w-[520px] mx-auto text-[16px] text-[#CFCFCF] leading-[1.7] mt-3">
-            Every contribution — no matter the size — directly supports individuals with special needs and strengthens the communities we serve.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Make a Difference"
+        title="Your Generosity Changes Lives"
+        subtitle="Every contribution — no matter the size — directly supports individuals with special needs and strengthens the communities we serve."
+        imageSrc="/images/donate-hero.jpg"
+        imageAlt="Community members working together in a garden"
+      />
 
       {/* DONATION FORM SECTION */}
       <section className="py-16 lg:py-[88px]">

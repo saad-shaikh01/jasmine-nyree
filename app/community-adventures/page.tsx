@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
@@ -100,8 +101,8 @@ export default function CommunityAdventuresPage() {
             </div>
           </div>
 
-          {/* VALUE PROPS */}
-          <div className="space-y-5">
+          {/* VALUE PROPS CARDS MATCHING EXACT USER REFERENCE DESIGN */}
+          <div className="relative pt-6 pl-4 space-y-6">
             {[
               {
                 title: "Individualized Planning",
@@ -120,14 +121,33 @@ export default function CommunityAdventuresPage() {
                 desc: "We partner with local businesses, venues, and organizations to create welcoming experiences.",
               },
             ].map((item) => (
-              <div key={item.title} className="flex gap-4 items-start bg-[#FBF4E8] rounded-[6px] p-5 border border-[#ECE3D2]">
-                <svg viewBox="0 0 24 24" fill="#C69440" className="w-5 h-5 shrink-0 mt-[2px]">
-                  <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" />
-                </svg>
-                <div>
-                  <h3 className="font-sans text-[15px] font-bold text-[#3A3A3A] mb-1">{item.title}</h3>
-                  <p className="text-[13.5px] text-[#5F5F5F] leading-[1.6]">{item.desc}</p>
+              <div
+                key={item.title}
+                className="group relative bg-white rounded-2xl p-6 sm:p-7 border border-[#ECE3D2] shadow-[0_8px_30px_-8px_rgba(0,0,0,0.06)] hover:shadow-xl hover:border-[#10B981]/40 transition-all duration-300 hover:-translate-y-1"
+              >
+                {/* STANDALONE 3D GREEN TICK OVERHANGING TOP-LEFT CORNER */}
+                <div className="absolute -top-5 -left-5 w-14 h-14 z-20 pointer-events-none drop-shadow-md group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                  <Image
+                    src="/images/icons/tick.webp"
+                    alt="Green Tick"
+                    width={56}
+                    height={56}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
+
+                <div className="flex items-center gap-3 mb-2.5 pl-2">
+                  <div className="w-8 h-8 rounded-xl bg-[#E8F7ED] flex items-center justify-center shrink-0 border border-[#D1F2DC]">
+                    <span className="w-3 h-3 rounded-full bg-[#10B981] shadow-xs" />
+                  </div>
+                  <h3 className="font-sans text-[17px] font-bold text-[#232323] tracking-tight">
+                    {item.title}
+                  </h3>
+                </div>
+
+                <p className="text-[13.5px] text-[#5F5F5F] leading-[1.65] pl-11">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -149,17 +169,31 @@ export default function CommunityAdventuresPage() {
             {adventures.map((adventure) => (
               <article
                 key={adventure.title}
-                className="bg-white border border-[#ECE3D2] rounded-[6px] p-7 card-shadow-hover"
+                className="group relative bg-white border border-[#ECE3D2] rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 shadow-xs hover:shadow-xl flex flex-col justify-between overflow-hidden"
               >
-                <div className="w-[56px] h-[56px] shrink-0 rounded-full bg-[#FBEEDA] flex items-center justify-center text-[#C69440] mb-5">
+                {/* Top subtle gold line accent on hover */}
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#C69440] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* WATERMARK SVG ICON AT TOP RIGHT */}
+                <div className="absolute -top-3 -right-3 w-28 h-28 text-[#C69440]/12 group-hover:text-[#C69440]/25 transition-all duration-300 pointer-events-none transform -rotate-12 group-hover:scale-110 group-hover:rotate-0 [&_svg]:w-full [&_svg]:h-full">
                   {adventure.icon}
                 </div>
-                <h3 className="font-sans text-[16px] font-bold text-[#3A3A3A] mb-[9px]">
-                  {adventure.title}
-                </h3>
-                <p className="text-[13.5px] text-[#5F5F5F] leading-[1.65]">
-                  {adventure.description}
-                </p>
+
+                <div className="relative z-10 pt-1">
+                  <h3 className="font-serif text-[19px] font-medium text-[#232323] group-hover:text-[#A87A2C] transition-colors duration-200 mb-2.5 pr-10">
+                    {adventure.title}
+                  </h3>
+                  <p className="text-[13.5px] text-[#5F5F5F] leading-[1.7]">
+                    {adventure.description}
+                  </p>
+                </div>
+
+                <div className="relative z-10 mt-6 pt-4 border-t border-[#F5EBD9] flex items-center justify-between text-[11px] font-bold text-[#C69440] tracking-wider uppercase">
+                  <span>Community Outing</span>
+                  <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200">
+                    →
+                  </span>
+                </div>
               </article>
             ))}
           </div>
