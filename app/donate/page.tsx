@@ -5,13 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 
+import DonationWidget from "@/components/donation/DonationWidget";
+
 const donationAmounts = [25, 50, 100, 250, 500];
 
 export default function DonatePage() {
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(100);
-  const [customAmount, setCustomAmount] = useState("");
-  const [isCustom, setIsCustom] = useState(false);
-
   const impactItems = [
     {
       title: "Support Our Programs",
@@ -67,76 +65,7 @@ export default function DonatePage() {
               <div className="rule rule-center" />
             </div>
 
-            {/* AMOUNT SELECTOR */}
-            <div className="bg-[#FBF4E8] rounded-[8px] border border-[#ECE3D2] p-8">
-              <p className="text-[14px] font-semibold text-[#3A3A3A] mb-4">Select a donation amount:</p>
-              <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 mb-5">
-                {donationAmounts.map((amount) => (
-                  <button
-                    key={amount}
-                    onClick={() => { setSelectedAmount(amount); setIsCustom(false); setCustomAmount(""); }}
-                    className={`py-3 px-4 rounded-[4px] text-[15px] font-bold transition-all duration-200 border ${
-                      selectedAmount === amount && !isCustom
-                        ? "bg-[#C69440] text-white border-[#C69440] shadow-md"
-                        : "bg-white text-[#3A3A3A] border-[#ECE3D2] hover:border-[#C69440] hover:text-[#C69440]"
-                    }`}
-                  >
-                    ${amount}
-                  </button>
-                ))}
-              </div>
-
-              {/* CUSTOM AMOUNT */}
-              <div className="flex items-center gap-3 mb-6">
-                <button
-                  onClick={() => { setIsCustom(true); setSelectedAmount(null); }}
-                  className={`py-3 px-5 rounded-[4px] text-[14px] font-bold transition-all duration-200 border whitespace-nowrap ${
-                    isCustom
-                      ? "bg-[#C69440] text-white border-[#C69440]"
-                      : "bg-white text-[#3A3A3A] border-[#ECE3D2] hover:border-[#C69440]"
-                  }`}
-                >
-                  Custom
-                </button>
-                {isCustom && (
-                  <div className="flex items-center gap-1 flex-1">
-                    <span className="text-[18px] font-bold text-[#3A3A3A]">$</span>
-                    <input
-                      type="number"
-                      min="1"
-                      placeholder="Enter amount"
-                      value={customAmount}
-                      onChange={(e) => setCustomAmount(e.target.value)}
-                      className="w-full py-3 px-4 rounded-[4px] border border-[#ECE3D2] text-[15px] text-[#3A3A3A] focus:outline-none focus:border-[#C69440] transition-colors"
-                    />
-                  </div>
-                )}
-              </div>
-
-              {/* DONATION FREQUENCY */}
-              <div className="flex gap-4 mb-6">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="frequency" defaultChecked className="accent-[#C69440] w-4 h-4" />
-                  <span className="text-[14px] text-[#3A3A3A] font-semibold">One-Time</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="frequency" className="accent-[#C69440] w-4 h-4" />
-                  <span className="text-[14px] text-[#3A3A3A] font-semibold">Monthly</span>
-                </label>
-              </div>
-
-              {/* DONATE BUTTON */}
-              <button className="w-full bg-[#C69440] hover:bg-[#A87A2C] text-white py-4 rounded-[4px] text-[14px] font-bold tracking-[0.12em] uppercase transition-colors duration-200 flex items-center justify-center gap-3">
-                Donate {isCustom && customAmount ? `$${customAmount}` : selectedAmount ? `$${selectedAmount}` : "Now"}
-                <svg className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8z" />
-                </svg>
-              </button>
-
-              <p className="text-[12px] text-[#8A8A8A] text-center mt-4">
-                Jasmine Nyree Corporation is a registered nonprofit. Your donation may be tax-deductible.
-              </p>
-            </div>
+            <DonationWidget />
           </div>
         </div>
       </section>
